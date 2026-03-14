@@ -1,7 +1,6 @@
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Layer, Rect, Stage, Text } from 'react-konva';
-import type { Stage as KonvaStage } from 'konva/lib/Stage';
+import { Canvas, IText, Rect } from 'fabric';
 import Brand from '../components/Brand';
 import ThemeToggle from '../components/ThemeToggle';
 
@@ -15,21 +14,78 @@ type FeedPost = {
 const cardColors = ['#8b5cf6', '#0ea5a4', '#ec4899', '#2563eb', '#16a34a'];
 
 export default function FeedPage() {
-  const [cardText, setCardText] = useState('Anonymous vibes only ✨');
+  const [cardText, setCardText] = useState('late night thoughts ✨');
   const [cardColor, setCardColor] = useState(cardColors[0]);
   const [posts, setPosts] = useState<FeedPost[]>([]);
-  const stageRef = useRef<KonvaStage | null>(null);
+  const canvasElRef = useRef<HTMLCanvasElement | null>(null);
+  const editorRef = useRef<Canvas | null>(null);
+  const bgRef = useRef<Rect | null>(null);
+  const textRef = useRef<IText | null>(null);
 
-  const cardPreview = useMemo(() => ({
-    width: 420,
-    height: 240,
-  }), []);
+  useEffect(() => {
+    if (!canvasElRef.current || editorRef.current) return;
+
+    const editor = new Canvas(canvasElRef.current, {
+      width: 420,
+      height: 240,
+      backgroundColor: '#111827',
+      preserveObjectStacking: true,
+      selection: false,
+    });
+
+    const bg = new Rect({
+      left: 0,
+      top: 0,
+      width: 420,
+      height: 240,
+      fill: cardColor,
+      rx: 16,
+      ry: 16,
+      selectable: false,
+      evented: false,
+    });
+
+    const txt = new IText(cardText, {
+      left: 26,
+      top: 42,
+      width: 368,
+      fill: '#ffffff',
+      fontSize: 34,
+      fontWeight: '700',
+      fontFamily: 'Inter',
+      editable: false,
+      selectable: false,
+    });
+
+    editor.add(bg);
+    editor.add(txt);
+    editorRef.current = editor;
+    bgRef.current = bg;
+    textRef.current = txt;
+
+    return () => {
+      editor.dispose();
+      editorRef.current = null;
+    };
+  }, [cardColor, cardText]);
+
+  useEffect(() => {
+    if (!editorRef.current || !bgRef.current) return;
+    bgRef.current.set('fill', cardColor);
+    editorRef.current.renderAll();
+  }, [cardColor]);
+
+  useEffect(() => {
+    if (!editorRef.current || !textRef.current) return;
+    textRef.current.set('text', cardText || 'write something...');
+    editorRef.current.renderAll();
+  }, [cardText]);
 
   const publishPost = () => {
-    const stage = stageRef.current;
-    if (!stage) return;
+    const editor = editorRef.current;
+    if (!editor) return;
 
-    const dataUrl = stage.toDataURL({ pixelRatio: 2 });
+    const dataUrl = editor.toDataURL({ format: 'png', multiplier: 2 });
     setPosts((prev) => [
       {
         id: crypto.randomUUID(),
@@ -44,18 +100,18 @@ export default function FeedPage() {
   return (
     <>
       <header className="site-header">
-        <Brand subtitle="Your personalized anonymous feed" />
+        <Brand subtitle="Your private corner" />
         <div className="feed-header-actions">
           <ThemeToggle />
           <details className="dropdown">
-            <summary className="dropbtn">⚙️ Profile Menu</summary>
+            <summary className="dropbtn">Profile Menu</summary>
             <div className="dropdown-content">
-              <Link to="/profile">👤 Update Profile</Link>
-              <Link to="/inbox">📥 Anonymous Inbox</Link>
-              <Link to="/dashboard">📊 Weekly Stats Dashboard</Link>
-              <Link to="/group-chat">💬 Anonymous Group Chat</Link>
-              <Link to="/about">ℹ️ About</Link>
-              <Link to="/">🚪 Log out</Link>
+              <Link to="/profile">Update Profile</Link>
+              <Link to="/inbox">Anonymous Inbox</Link>
+              <Link to="/dashboard">Weekly Dashboard</Link>
+              <Link to="/group-chat">Group Chat</Link>
+              <Link to="/about">About</Link>
+              <Link to="/">Log out</Link>
             </div>
           </details>
         </div>
@@ -63,8 +119,8 @@ export default function FeedPage() {
 
       <main className="container page-stack">
         <section className="panel">
-          <h2>Create Feed Card (Canvas)</h2>
-          <p>Design a post card with canvas and publish it into your feed.</p>
+          <h2>Create a feed card</h2>
+          <p>Use the editor below to craft a simple visual post.</p>
 
           <div className="canvas-tools">
             <label>
@@ -73,70 +129,41 @@ export default function FeedPage() {
             </label>
 
             <label>
-              Background color
+              Color
               <select value={cardColor} onChange={(event) => setCardColor(event.target.value)}>
                 {cardColors.map((color) => (
-                  <option key={color} value={color}>{color}</option>
+                  <option key={color} value={color}>
+                    {color}
+                  </option>
                 ))}
               </select>
             </label>
           </div>
 
           <div className="canvas-wrap">
-            <Stage width={cardPreview.width} height={cardPreview.height} ref={stageRef}>
-              <Layer>
-                <Rect x={0} y={0} width={cardPreview.width} height={cardPreview.height} fill={cardColor} cornerRadius={18} />
-                <Text
-                  x={24}
-                  y={38}
-                  width={cardPreview.width - 48}
-                  text={cardText || 'Your text appears here...'}
-                  fill="#ffffff"
-                  fontSize={28}
-                  lineHeight={1.3}
-                  fontStyle="bold"
-                />
-                <Text x={24} y={cardPreview.height - 36} text="VZN ANON" fill="rgba(255,255,255,0.9)" fontSize={16} />
-              </Layer>
-            </Stage>
+            <canvas ref={canvasElRef} />
           </div>
 
           <button className="button primary" type="button" onClick={publishPost}>
-            <span aria-hidden="true">🖼️</span> Publish Canvas Card
+            Publish Card
           </button>
         </section>
 
         <section className="panel">
-          <h2>Your Feed Posts</h2>
+          <h2>Your posts</h2>
           {posts.length === 0 ? (
-            <p className="muted-note">No posts yet. Create your first canvas card above.</p>
+            <p className="muted-note">No post yet. Publish your first card above.</p>
           ) : (
             <div className="feed-posts">
               {posts.map((post) => (
                 <article key={post.id} className="feed-post-card">
-                  <img src={post.cardImage} alt="Canvas feed card" />
+                  <img src={post.cardImage} alt="Feed card" />
                   <p>{post.text}</p>
                   <small>{post.createdAt}</small>
                 </article>
               ))}
             </div>
           )}
-        </section>
-
-        <section className="panel">
-          <h2>How this works</h2>
-          <p>Share your anonymous link and start receiving messages from people.</p>
-          <p>
-            <strong>Your link:</strong> <code>https://vznanon.app/your-custom-name</code>
-          </p>
-          <div className="cta-row compact-row">
-            <Link className="button primary" to="/inbox">
-              <span aria-hidden="true">📥</span> Open Inbox
-            </Link>
-            <Link className="button secondary" to="/group-chat">
-              <span aria-hidden="true">💬</span> Join Group Chat
-            </Link>
-          </div>
         </section>
       </main>
     </>

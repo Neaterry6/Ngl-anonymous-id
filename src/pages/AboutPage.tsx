@@ -3,22 +3,24 @@ import Header from '../components/Header';
 export default function AboutPage() {
   return (
     <>
-      <Header title="About VZN Anon" />
+      <Header title="About" />
       <main className="container page-stack">
         <section className="panel">
-          <h1>About this project</h1>
+          <h1>Why VZN Anon exists</h1>
           <p>
-            VZN Anon is a social prototype focused on anonymous conversations, feedback, and real-time group chat.
-            The app is built with React + TypeScript + Vite and uses a lightweight WebSocket server for live group chat updates.
+            Sometimes the most honest messages are the ones people are shy to send publicly.
+            VZN Anon gives you a clean private space to collect that feedback, reflect on it,
+            and engage with your community in your own way.
           </p>
         </section>
 
         <section className="panel">
-          <h2>Creator</h2>
+          <h2>Built with intention</h2>
           <p>
-            Creator GitHub: <a href="https://github.com/Neaterry6" target="_blank" rel="noreferrer">@Neaterry6</a>
+            The experience is designed to be lightweight, mobile-friendly, and simple to use across feed,
+            inbox, profile, dashboard, and group chat.
           </p>
-          <p className="muted-note">Replace this GitHub link with your exact profile URL if you want your live handle shown.</p>
+          <p className="muted-note">Created with love — my broken VZN.</p>
         </section>
       </main>
     </>

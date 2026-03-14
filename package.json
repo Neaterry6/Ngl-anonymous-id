@@ -13,10 +13,9 @@
   },
   "dependencies": {
     "express": "^5.2.1",
-    "konva": "^9.3.20",
+    "fabric": "^7.2.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-konva": "^18.2.10",
     "react-router-dom": "^6.28.1",
     "ws": "^8.19.0"
   },

@@ -342,33 +342,6 @@ textarea {
   margin-top: 0.25rem;
 }
 
-.reaction-row {
-  display: flex;
-  gap: 0.35rem;
-}
-
-.reaction-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.2rem;
-  border: 1px solid var(--border);
-  background: color-mix(in oklab, var(--card) 70%, transparent);
-  color: var(--text);
-  border-radius: 999px;
-  padding: 0.14rem 0.38rem;
-  cursor: pointer;
-}
-
-.reaction-btn small {
-  font-size: 0.64rem;
-  color: var(--muted);
-}
-
-.reaction-btn.active {
-  border-color: var(--secondary);
-  box-shadow: 0 0 0 1px color-mix(in oklab, var(--secondary) 50%, transparent);
-}
-
 .chat-image {
   margin-top: 0.5rem;
   max-width: 240px;
@@ -398,7 +371,6 @@ textarea {
 }
 
 .inline-file-input input { display: none; }
-.voice-btn { background: linear-gradient(90deg, #1e7e68, #2dd4bf); color: #fff; }
 .mic-round { border-radius: 999px; }
 
 .voice-preview { display: flex; align-items: center; gap: 0.55rem; }
@@ -506,6 +478,57 @@ footer { text-align: center; color: var(--muted); padding: 1rem; }
   .chat-appbar { grid-template-columns: auto auto 1fr auto; }
   .online-pill { display: none; }
   .chat-box { max-height: 58vh; }
-  .composer-main { grid-template-columns: auto 1fr auto auto; }
+  .composer-main { grid-template-columns: auto 1fr auto; }
   .bubble-footer { flex-direction: column; align-items: flex-end; }
+}
+
+
+.ngl-hero {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.ngl-hero p {
+  max-width: 620px;
+  margin: 0.7rem auto;
+  line-height: 1.6;
+}
+
+
+.react-trigger {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--card) 80%, transparent);
+  color: var(--muted);
+  padding: 0.15rem 0.55rem;
+  font-size: 0.73rem;
+}
+
+.reaction-popover {
+  display: flex;
+  gap: 0.35rem;
+  margin-top: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.reaction-popover button {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--field-bg);
+  color: var(--text);
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+}
+
+.reaction-summary {
+  display: inline-flex;
+  gap: 0.4rem;
+  margin-top: 0.45rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: color-mix(in oklab, var(--card) 85%, transparent);
+  font-size: 0.75rem;
 }

@@ -4,29 +4,23 @@ import Header from '../components/Header';
 export default function LandingPage() {
   return (
     <>
-      <Header title="Built for bold, anonymous conversations" />
+      <Header title="A simple way to hear what people really think" />
       <main className="container hero">
-        <section className="panel hero-panel">
-          <p className="badge">Safe • Fun • Anonymous</p>
-          <h1>Welcome to VZN Anon</h1>
-          <h2>Share your link. Receive anonymous messages.</h2>
+        <section className="panel hero-panel ngl-hero">
+          <p className="badge">Anonymous • Honest • Private</p>
+          <h1>Get honest messages from your circle</h1>
           <p>
-            VZN Anon lets you collect honest anonymous messages from friends and followers.
-            Create your account, customize your anonymous link, and receive private feedback in your inbox.
+            Share your link in your bio or story. Friends can drop a message without revealing their name,
+            and you see everything in one clean inbox.
           </p>
           <div className="cta-row">
-            <Link className="button primary" to="/signup">
-              <span aria-hidden="true">📝</span> Create an account
-            </Link>
-            <Link className="button secondary" to="/login">
-              <span aria-hidden="true">🔐</span> Sign in
-            </Link>
+            <Link className="button primary" to="/signup">Create account</Link>
+            <Link className="button secondary" to="/login">I already have an account</Link>
           </div>
         </section>
       </main>
       <footer>
-        <p>After login you can use feed, profile, inbox, dashboard stats, and anonymous group chat.</p>
-        <p>Creator GitHub: <a href="https://github.com/Neaterry6" target="_blank" rel="noreferrer">@Neaterry6</a></p>
+        <p>Created with love — my broken VZN.</p>
       </footer>
     </>
   );

@@ -1,6 +1,6 @@
-# VZN Anon (React + TypeScript + Node.js runtime)
+# VZN Anon
 
-VZN Anon is a multi-page anonymous social prototype built with **React + TypeScript + Vite** and a lightweight **WebSocket chat server**.
+VZN Anon is a multi-page anonymous social app prototype built with React + TypeScript + Vite and a lightweight WebSocket server.
 
 ## Run locally
 
@@ -10,31 +10,26 @@ npm run dev
 ```
 
 This starts:
-- Vite frontend (`http://localhost:5173`)
-- WebSocket group chat server (`ws://localhost:3002`)
+- Frontend on `http://localhost:5173`
+- Chat websocket server on `ws://localhost:3002`
 
-## Pages included
+## Pages
 
-- `/` landing page
-- `/signup` sign up page
-- `/login` login page
-- `/feed` post-login feed page + canvas card post creator
-- `/profile` profile settings page
-- `/inbox` anonymous inbox page
-- `/dashboard` weekly user stats dashboard
-- `/group-chat` global anonymous group chat
-- `/about` about + creator section
+- `/` landing
+- `/signup` signup
+- `/login` login
+- `/feed` feed + card editor
+- `/profile` profile settings
+- `/inbox` anonymous inbox
+- `/dashboard` weekly stats
+- `/group-chat` anonymous group chat
+- `/about` about
 
-## Key features
+## Highlights
 
-- Responsive mobile + desktop UI across all pages
-- Light and dark theme toggle (saved in local storage)
-- Real-time group chat powered by WebSockets
-- Message types: text, image upload preview, voice-note stub bubble
-- Per-message reactions: Love, Like, Angry (live updates)
-- Feed canvas card editor using `react-konva` + `konva`
-- Anonymous aliases for chat users
-
-## Creator
-
-- GitHub: `https://github.com/Neaterry6`
+- Responsive layout for mobile and desktop
+- Light/dark theme toggle
+- Real-time group chat (messages + reactions)
+- Popup reaction picker on message tap
+- Feed card editor powered by Fabric.js
+- Created with love — my broken VZN
