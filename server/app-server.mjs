@@ -77,7 +77,7 @@ server.on('upgrade', (request, socket, head) => {
 
 app.get('/health', (_req, res) => res.json({ ok: true }));
 app.use(express.static(distDir));
-app.get('*', (_req, res) => {
+app.use((_req, res) => {
   res.sendFile(path.join(distDir, 'index.html'));
 });
 
